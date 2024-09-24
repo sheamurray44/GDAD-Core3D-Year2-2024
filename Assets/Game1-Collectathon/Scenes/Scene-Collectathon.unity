@@ -269,6 +269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 307122897}
+  - component: {fileID: 307122898}
   m_Layer: 0
   m_Name: Collectible Spawner
   m_TagString: Untagged
@@ -291,6 +292,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &307122898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307122895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a12f4b6dd9182e44aecddfb8f693849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectiblePrefab: {fileID: 3063487966419773094, guid: 67e91ad03df07d2498496f1ace5ee378,
+    type: 3}
+  numberOfCollectibles: 10
+  spawnArea: {x: 20, y: 0, z: 20}
 --- !u!1 &312829435
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,6 +827,7 @@ GameObject:
   - component: {fileID: 448289509}
   - component: {fileID: 448289508}
   - component: {fileID: 448289507}
+  - component: {fileID: 448289512}
   m_Layer: 0
   m_Name: Player Ball
   m_TagString: Player
@@ -825,8 +843,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 448289505}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 3
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -930,6 +948,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &448289512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448289505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce7497edb5b4c1f4e8fbf8ff4a477c10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
 --- !u!1 &488295149
 GameObject:
   m_ObjectHideFlags: 0
@@ -2921,6 +2952,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1758604975}
+  - component: {fileID: 1758604976}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -2943,6 +2975,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1758604976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758604974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae2dd40b74cc0d4f82fdef083e1a035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 744910895}
+  timerText: {fileID: 1930494305}
+  winText: {fileID: 488295149}
+  gameOverText: {fileID: 1741158668}
 --- !u!4 &1763369027 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 44884af1ac1d64d42902da40268ba120,
