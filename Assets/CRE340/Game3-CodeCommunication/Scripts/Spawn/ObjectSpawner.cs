@@ -5,13 +5,13 @@ using Random = UnityEngine.Random; // Import for using Lists
 
 public class ObjectSpawner : MonoBehaviour
 {
-    public GameObject objectPrefab;  // Array of prefabs to spawn
+    public GameObject[] objectPrefabs;  // Array of prefabs to spawn
     
     public Vector3 spawnArea;           // x, y, z (width, height, depth) of the spawn area
-    public float minSpawnInterval = 1f; // Minimum spawn interval (2 seconds)
-    public float maxSpawnInterval = 3f; // Maximum spawn interval (5 seconds)
+    public float minSpawnInterval = 2f; // Minimum spawn interval (2 seconds)
+    public float maxSpawnInterval = 5f; // Maximum spawn interval (5 seconds)
     
-
+    public List<GameObject> spawnedObjects = new List<GameObject>();
     void Start()
     {
         // Start invoking the SpawnObject method at a random interval
@@ -20,10 +20,11 @@ public class ObjectSpawner : MonoBehaviour
 
     void SpawnRandomObject()
     {
-        if (objectPrefab==null) return;  // Ensure there is something to spawn
+        if (objectPrefabs.Length == 0) return;  // Ensure there is something to spawn
 
         // Pick a random prefab from the array
-        GameObject prefabToSpawn = objectPrefab;
+        int randomIndex = Random.Range(0, objectPrefabs.Length);
+        GameObject prefabToSpawn = objectPrefabs[randomIndex];
 
         // Generate a random position within the spawn area
         Vector3 randomPosition = new Vector3(
@@ -35,6 +36,7 @@ public class ObjectSpawner : MonoBehaviour
         // Instantiate the prefab at the random position
         GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.identity);
         
+        spawnedObjects.Add(spawnedObject);
 
         // Reschedule the next spawn with a new random interval
         CancelInvoke("SpawnRandomObject"); // Cancel the current schedule
@@ -48,4 +50,8 @@ public class ObjectSpawner : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, spawnArea);
     }
     
+    public void ShowSpawnedObjectsCount()
+    {
+        Debug.Log("Number of spawned objects: " + spawnedObjects.Count);
+    }
 }

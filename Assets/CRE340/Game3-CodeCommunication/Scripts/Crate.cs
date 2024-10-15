@@ -4,7 +4,6 @@ using UnityEngine;
 public class Crate : MonoBehaviour, IDamagable
 {
     public int health = 10;
-
     private Material mat;
     private Color originalColor;
     
@@ -38,4 +37,5 @@ public class Crate : MonoBehaviour, IDamagable
     private void ResetMaterial(){
         mat.color = originalColor;
     }
+
 }

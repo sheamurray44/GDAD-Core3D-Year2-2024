@@ -3,12 +3,19 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
+    public EnemyData enemyData;
     public int health = 10;
-    
     private Material mat;
     private Color originalColor;
-    
-    private void Start(){
+
+    private void Awake()
+    {
+        gameObject.name = enemyData.enemyName;
+        GetComponent<Renderer>().material.color = enemyData.enemyColor;
+
+    }
+    private void Start()
+    {
         mat = GetComponent<Renderer>().material;
         originalColor = mat.color;
     }
@@ -31,23 +38,21 @@ public class Enemy : MonoBehaviour, IDamagable
         }
     }
     
-    private void Die()
-    {
-        // Optional: add death logic, like spawning loot or playing an animation
-        Destroy(gameObject);
-        //debug log to show that the enemy has died
-        Debug.Log("Enemy has died");
-    }
-    
     public void ShowHitEffect()
     {
-        //get the material and flash it red
-        Material mat = GetComponent<Renderer>().material;
         mat.color = Color.red;
         Invoke("ResetMaterial", 0.1f);
     }
 
     private void ResetMaterial(){
         mat.color = originalColor;
+    }
+
+    private void Die()
+    {
+        // Optional: add death logic, like spawning loot or playing an animation
+        Destroy(gameObject);
+        //debug log to show that the enemy has died
+        Debug.Log("Enemy has died");
     }
 }
