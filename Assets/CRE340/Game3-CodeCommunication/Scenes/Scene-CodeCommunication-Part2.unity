@@ -3585,9 +3585,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Text Log : Events will be Shown Here!!!'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d90c42919ce11cf4c8d0c061c5764c13, type: 2}
-  m_sharedMaterial: {fileID: -8212579064444525704, guid: d90c42919ce11cf4c8d0c061c5764c13,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials:
   - {fileID: -8212579064444525704, guid: d90c42919ce11cf4c8d0c061c5764c13, type: 2}
   m_fontMaterial: {fileID: 0}
@@ -4617,6 +4616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c8af8e64888ba4d80f308d398c32db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logText: {fileID: 1383904468}
+  lineCount: 10
 --- !u!4 &1757230500
 Transform:
   m_ObjectHideFlags: 0
