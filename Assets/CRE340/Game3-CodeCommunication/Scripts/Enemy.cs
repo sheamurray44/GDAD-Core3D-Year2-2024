@@ -49,6 +49,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void Die()
     {
+        GameManager.Instance.AddScore(10);
         // Instantiate die effect and apply area damage
         if (dieEffectPrefab != null)
         {

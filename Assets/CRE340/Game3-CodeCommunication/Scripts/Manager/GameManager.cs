@@ -38,6 +38,33 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int playerHealth = 100;
     [SerializeField] private int score = 0;
 
+    public string PlayerName
+    {
+        get { return playerName; }
+        private set
+        {
+            playerName = value;
+        }
+    }
+
+    public int PlayerHealth
+    {
+        get { return playerHealth; }
+        private set
+        {
+            playerHealth = value;
+        }
+    }
+
+    public int Score
+    {
+        get { return score; }
+        private set
+        {
+            playerHealth = value;
+        }
+    }
+
     #endregion
 
     #region Unity Methods
@@ -55,7 +82,32 @@ public class GameManager : MonoBehaviour
         {
             GameObject playerObject = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
             playerInstance = playerObject.GetComponent<Player>();
+            SetPlayerName(playerInstance.name);
         }
+    }
+
+    public void SetPlayerName(string name)
+    {
+        PlayerName = name;
+    }
+
+    public void SetPlayerHealth(int health)
+    {
+        PlayerHealth = Mathf.Clamp(health, 0, 100);
+        if (PlayerHealth <= 0)
+        {
+            Invoke("RestartLevel", 5F);
+        }
+    }
+
+    public void AddScore(int points)
+    {
+        Score += points;
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     #endregion

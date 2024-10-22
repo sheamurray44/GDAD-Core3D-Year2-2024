@@ -25,6 +25,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void TakeDamage(int damage)
     {
+        GameManager.Instance.SetPlayerHealth(health);
         // Reduce health by damage amount
         health -= damage;
 
