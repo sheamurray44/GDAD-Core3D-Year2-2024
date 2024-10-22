@@ -4,6 +4,7 @@ public class ExplodingCrate : MonoBehaviour, IDamagable
 {
     public int health = 10;
     public GameObject explosionEffectPrefab;
+
     private Material mat;
     private Color originalColor;
 

@@ -4,6 +4,7 @@ using UnityEngine;
 public class Crate : MonoBehaviour, IDamagable
 {
     public int health = 10;
+
     private Material mat;
     private Color originalColor;
     
@@ -19,6 +20,8 @@ public class Crate : MonoBehaviour, IDamagable
         // Trigger the OnObjectDamaged event
         HealthEventManager.OnObjectDamaged?.Invoke(gameObject.name, health);
 
+        ShowHitEffect();
+        
         if (health <= 0)
         {
             // Trigger the OnObjectDestroyed event
@@ -37,5 +40,4 @@ public class Crate : MonoBehaviour, IDamagable
     private void ResetMaterial(){
         mat.color = originalColor;
     }
-
 }
