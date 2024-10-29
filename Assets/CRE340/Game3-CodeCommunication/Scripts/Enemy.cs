@@ -49,7 +49,6 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void Die()
     {
-        GameManager.Instance.AddScore(10);
         // Instantiate die effect and apply area damage
         if (dieEffectPrefab != null)
         {
@@ -62,8 +61,8 @@ public class Enemy : MonoBehaviour, IDamagable
         // Debug log to show that the enemy has died
         Debug.Log("Enemy has died");
         
-        //increase the players score in the game manager
-        
+        //increase the players score 
+        GameManager.Instance.AddScore(10 * enemyData.health);
     }
 
     public void ShowHitEffect()
