@@ -1,18 +1,12 @@
 using UnityEngine;
-
 using DG.Tweening;
-using UnityEditor;
 
-public class Enemy : MonoBehaviour, IDamagable
+public class Enemy : EnemyBase
 {
-    public EnemyData enemyData; // Reference to the EnemyData ScriptableObject
-    public GameObject dieEffectPrefab; // Reference to the die effect prefab
-    public int damage = 10; // Damage dealt by the enemy
-
+    public EnemyData enemyData;
+    public GameObject dieEffectPrefab;
+    public int damage = 10;
     private int health = 10;
-
-    private Material mat;
-    private Color originalColor;
 
     private void Awake()
     {
@@ -20,34 +14,25 @@ public class Enemy : MonoBehaviour, IDamagable
         gameObject.name = enemyData.enemyName;
         health = enemyData.health;
         damage = enemyData.damage;
+
         GetComponent<Renderer>().material.color = enemyData.enemyColor;
 
         Debug.Log($"Enemy {enemyData.enemyName} spawned with {enemyData.health} health and {enemyData.speed} speed.");
     }
 
-    private void Start()
-    {
-        mat = GetComponent<Renderer>().material;
-        originalColor = mat.color;
-    }
-    
     private void OnEnable()
     {
-        // TODO - add an animation event to play the spawn animation tween
-        //scale the enemy up from 0 to 1 in 1 second using DOTween
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutBounce);
-
     }
 
     // Method to handle taking damage (from player or other sources)
-    public void TakeDamage(int damage)
+    public override void TakeDamage(int damage)
     {
         health -= damage;
 
         // Trigger the OnObjectDamaged event
         HealthEventManager.OnObjectDamaged?.Invoke(gameObject.name, health);
-
         ShowHitEffect();
 
         if (health <= 0)
@@ -59,7 +44,7 @@ public class Enemy : MonoBehaviour, IDamagable
         }
     }
 
-    private void Die()
+    protected override void Die()
     {
         // Instantiate die effect and apply area damage
         if (dieEffectPrefab != null)
@@ -76,26 +61,14 @@ public class Enemy : MonoBehaviour, IDamagable
 
         // Debug log to show that the enemy has died
         Debug.Log("Enemy has died");
-        
+
         //increase the players score 
         GameManager.Instance.AddScore(10 * enemyData.health);
     }
 
-    public void ShowHitEffect()
+    public override void Move()
     {
-        // Get the material and flash it red
-        Material mat = GetComponent<Renderer>().material;
-        mat.color = Color.red;
-        Invoke("ResetMaterial", 0.1f);
-
-        //TODO - add an audio feedback when the enemy is hit
-        AudioEventManager.PlaySFX(this.transform, "Flesh Hit", 1.0f, 1.0f, true, 0.1f, 0f);
-
-    }
-
-    private void ResetMaterial()
-    {
-        mat.color = originalColor;
+        //Define specific movement if needed
     }
 
     // Method for the enemy to deal damage to another IDamagable object
