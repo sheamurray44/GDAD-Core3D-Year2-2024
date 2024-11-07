@@ -31,6 +31,7 @@ public class Player : MonoBehaviour, IDamagable
         //scale the player up from 0 to 1 in 1 second using DOTween
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutBounce);
+        
     }
 
     public void TakeDamage(int damage)
@@ -43,14 +44,16 @@ public class Player : MonoBehaviour, IDamagable
         
         //update the player health UI
         GameManager.Instance.SetPlayerHealth(health);
-
+        
         //TODO - add a camera shake effect when the player is hit
-        FeedbackEventManager.ShakeCamera(10f, 4f, 1f);
-
+        if (FeedbackEventManager.ShakeCamera != null){
+            FeedbackEventManager.ShakeCamera(10f, 4f, 1f);
+        }
 
         //TODO - add a chromatic aberation lerp effect when the player is hit
-        FeedbackEventManager.ChromaticAberrationLerp(1f, 1.0f);
-
+        if (FeedbackEventManager.ChromaticAberrationLerp != null){
+            FeedbackEventManager.ChromaticAberrationLerp(1f, 1.0f);
+        }
 
         ShowHitEffect();
 
@@ -74,14 +77,13 @@ public class Player : MonoBehaviour, IDamagable
         }
 
         //TODO - add and audio feedback when the player dies
-        AudioEventManager.PlaySFX(null, "Impact Generic", 1.0f, 1.0f, true, 0.1f, 0f);
-
-
-
+        AudioEventManager.PlaySFX(null, "Impact Generic",  1.0f, 1.0f, true, 0.1f, 0f, "null");
+        
+        
         // Optional: Add any additional death logic (e.g., respawn, game over)
-
+       
         //Destroy(gameObject);
-
+        
         //disable the movement and shooting scripts and render the player invisible
         GetComponent<FixedCameraMovementController>().enabled = false;
         GetComponent<Shoot>().enabled = false;
@@ -95,10 +97,9 @@ public class Player : MonoBehaviour, IDamagable
         // Flash the player material red on hit
         mat.color = Color.red;
         Invoke("ResetMaterial", 0.1f);
-
+        
         //TODO - add an audio feedback when the player is hit
-        AudioEventManager.PlaySFX(this.transform, "Debuff", 1.0f, 1.0f, true, 0.1f, 0f);
-
+        AudioEventManager.PlaySFX(this.transform, "Debuff",  1.0f, 1.0f, true, 0.1f, 0f, "null");
     }
 
     private void ResetMaterial()
