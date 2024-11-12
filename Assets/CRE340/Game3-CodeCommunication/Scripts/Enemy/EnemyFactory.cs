@@ -10,8 +10,10 @@ public static class EnemyFactory
             return null;
         }
 
+        // Instantiate the specific enemy prefab
         GameObject enemyInstance = GameObject.Instantiate(enemyData.enemyPrefab, position, Quaternion.identity);
 
+        // Get the Enemy component and assign the EnemyData
         EnemyBase enemy = enemyInstance.GetComponent<EnemyBase>();
         if (enemy != null)
         {

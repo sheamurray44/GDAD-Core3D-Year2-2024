@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3674739416674093960}
   - component: {fileID: 5255568676967507421}
   - component: {fileID: 232050402331622584}
-  - component: {fileID: -1024685388047882503}
+  - component: {fileID: -8728685417422269952}
   m_Layer: 0
   m_Name: PF_HealthCollectable
   m_TagString: Untagged
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 51e3c125c35845740958c861f099f6d9, type: 2}
---- !u!82 &-1024685388047882503
+--- !u!82 &-8728685417422269952
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,9 +159,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7842468050713168027, guid: 3c08029f3a334d8468cd0ea11728e603,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 6a03598a6b31b664a8e8ee55e9a8b081, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c928b0ebc5e0b7940a62c0319b35c800, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

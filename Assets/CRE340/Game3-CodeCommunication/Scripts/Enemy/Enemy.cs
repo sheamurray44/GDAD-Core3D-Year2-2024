@@ -1,87 +1,101 @@
 using UnityEngine;
 using DG.Tweening;
-
 public class Enemy : EnemyBase
 {
     public EnemyData enemyData;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private int health = 10;
+    public float speed = 2f;
+    public float chaseRange = 5f;
+    private IEnemyState currentState;
+    [HideInInspector]
+    public Transform target;
     public GameObject dieEffectPrefab;
-    public int damage = 10;
-    private int health = 10;
-
     private void Awake()
     {
-        // Apply the data from the ScriptableObject to the enemy
         gameObject.name = enemyData.enemyName;
         health = enemyData.health;
         damage = enemyData.damage;
-
+        speed = enemyData.speed;
+        chaseRange = enemyData.chaseRange;
         GetComponent<Renderer>().material.color = enemyData.enemyColor;
-
-        Debug.Log($"Enemy {enemyData.enemyName} spawned with {enemyData.health} health and {enemyData.speed} speed.");
+    }
+    private void Start()
+    {
+        SetState(new EnemyState_Idle());
+        Invoke("LocatePlayer", 1f);
+        LocatePlayer();
     }
 
     private void OnEnable()
     {
+        // Spawn animation: Scale from 0 to 1 over 1 second with DOTween
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutBounce);
     }
 
-    // Method to handle taking damage (from player or other sources)
+    private void Update()
+    {
+        currentState?.Update(this);
+    }
+
+    public void SetState(IEnemyState newState)
+    {
+        currentState?.Exit(this);
+        currentState = newState;
+        currentState?.Enter(this);
+    }
+
+    public string GetCurrentStateName()
+    {
+        return currentState != null ? currentState.GetType().Name.Replace("Enemy", "") : "No State";
+    }
+
+
     public override void TakeDamage(int damage)
     {
         health -= damage;
-
-        // Trigger the OnObjectDamaged event
+        // Trigger damage event and inherited hit effect
         HealthEventManager.OnObjectDamaged?.Invoke(gameObject.name, health);
-        ShowHitEffect();
-
+        ShowHitEffect(); // Inherited from EnemyBase
         if (health <= 0)
         {
             Die();
-
-            // Trigger the OnObjectDestroyed event
             HealthEventManager.OnObjectDestroyed?.Invoke(gameObject.name, health);
         }
     }
-
     protected override void Die()
     {
-        // Instantiate die effect and apply area damage
+        // Play death effect and sound
         if (dieEffectPrefab != null)
         {
             Instantiate(dieEffectPrefab, transform.position, Quaternion.identity);
         }
-
-        //TODO - add and audio feedback when the enemy dies
-        AudioEventManager.PlaySFX(null, "Explosion Flesh", 1.0f, 1.0f, true, 0.1f, 0f);
-
-
-        // Optional: add death logic, like spawning loot or playing an animation
+        //AudioEventManager.PlaySFX(null, "Explosion Flesh", 1.0f, 1.0f, true, 0.1f, 0f);
         Destroy(gameObject);
-
-        // Debug log to show that the enemy has died
         Debug.Log("Enemy has died");
-
-        //increase the players score 
+        // Update score based on enemy health
         GameManager.Instance.AddScore(10 * enemyData.health);
     }
-
     public override void Move()
     {
-        //Define specific movement if needed
+        // Define movement specific to this enemy, if needed
     }
-
-    // Method for the enemy to deal damage to another IDamagable object
     private void OnCollisionEnter(Collision collision)
     {
-        // Check if the collided object has the IDamagable interface
+        // Apply damage to other objects implementing IDamagable
         IDamagable damagableObject = collision.gameObject.GetComponent<IDamagable>();
-        // Prevent enemy from damaging other enemies (check the tag or another distinguishing property)
         if (damagableObject != null && collision.gameObject.tag != "Enemy")
         {
-            // Call TakeDamage on the object, dealing the enemy's damage amount
             damagableObject.TakeDamage(damage);
             Debug.Log($"{gameObject.name} dealt {damage} damage to {collision.gameObject.name}.");
+        }
+    }
+    private void LocatePlayer()
+    {
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
 }
