@@ -40,19 +40,19 @@ public class AV_Testing : MonoBehaviour
         }
         //press the y key to call the audio manager event to play a music
         if (Input.GetKeyDown(KeyCode.Y)){
-            //udioEventManager.PlayBGM(0, "name here", 1F, FadeType.FadeInOut, 2f, true, "null");
+            AudioEventManager.PlayBGM(0, "name here", 1F, FadeType.FadeInOut, 2f, true, "null");
         }
         
         //press the z key to call the audio manager event to play ambient audio
         if (Input.GetKeyDown(KeyCode.Z)){
-            //AudioEventManager.PlayAmbientAudio(null, 0, "name here", 1F, 1F, 1F, FadeType.FadeInOut, 2f, true, "null");
+            AudioEventManager.PlayAmbientAudio(null, 0, "name here", 1F, 1F, 1F, FadeType.FadeInOut, 2f, true, "null");
         }
         
         // press the m key to get and call the AudioEventSender_SFX component Play() to play a sfx
         if (Input.GetKeyDown(KeyCode.M))
         {
-            //AudioEventSender_SFX audioEventSender = GetComponent<AudioEventSender_SFX>();
-            //audioEventSender?.Play();
+            AudioEventSender_SFX audioEventSender = GetComponent<AudioEventSender_SFX>();
+            audioEventSender?.Play();
         }
     }
     
