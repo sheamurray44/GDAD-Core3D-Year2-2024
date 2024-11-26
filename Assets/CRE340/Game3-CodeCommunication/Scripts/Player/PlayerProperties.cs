@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 public class PlayerProperties
@@ -18,6 +16,7 @@ public class PlayerProperties
         this.inventory = inventory;
     }
 
+    // Default constructor for empty player data
     public PlayerProperties()
     {
         name = "Player";

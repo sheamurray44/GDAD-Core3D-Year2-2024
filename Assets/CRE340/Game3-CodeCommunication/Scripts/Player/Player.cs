@@ -2,9 +2,12 @@ using System;
 using UnityEngine;
 using DG.Tweening;
 
+//note the player should be instantiated to the scene from the prefab
+
 public class Player : MonoBehaviour, IDamagable
 {
-    public string playerName; // Name of the player
+    [SerializeField]
+    private string playerName; // Name of the player
     public int health = 100; // Player health
     public GameObject dieEffectPrefab; // Reference to the die effect prefab
 
